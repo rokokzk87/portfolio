@@ -89,6 +89,21 @@ git commit -m "update portfolio"
 git push origin main
 ```
 
+## Backend API
+
+Base URL: `http://<server-ip>:8001`
+
+- `GET /health` — проверка статуса
+- `POST /leads` — создать заявку
+- `GET /admin/leads` — список заявок (требует заголовок `x-admin-key`)
+- `GET /admin/leads.csv` — экспорт CSV (требует `x-admin-key`)
+
+### Переменные окружения backend
+
+- `ADMIN_KEY` — ключ для админ-эндпоинтов
+- `TG_BOT_TOKEN` — токен Telegram-бота (опционально)
+- `TG_CHAT_ID` — чат для уведомлений о новых лидах (опционально)
+
 ## Что важно доделать перед реальным продом
 
 - Настроить доставку заявок из SQLite в CRM/Telegram/email

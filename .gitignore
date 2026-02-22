@@ -12,3 +12,4 @@ next-env.d.ts
 # python backend runtime artifacts
 backend/__pycache__/
 backend/*.db
+backend/.admin_key
