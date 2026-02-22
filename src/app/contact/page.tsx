@@ -23,7 +23,7 @@ export default function ContactPage() {
     };
 
     try {
-      const res = await fetch("http://77.91.103.19:8001/leads", {
+      const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
