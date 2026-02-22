@@ -11,10 +11,11 @@ export default function ContactPage() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formEl = e.currentTarget;
     setStatus("loading");
     setMessage("");
 
-    const form = new FormData(e.currentTarget);
+    const form = new FormData(formEl);
     const payload = {
       name: String(form.get("name") || ""),
       company: String(form.get("company") || ""),
@@ -45,7 +46,7 @@ export default function ContactPage() {
 
       setStatus("ok");
       setMessage(`✅ Заявка отправлена успешно${leadId ? ` (ID: ${leadId})` : ""}. Мы скоро свяжемся с вами.`);
-      e.currentTarget.reset();
+      formEl.reset();
     } catch {
       setStatus("error");
       setMessage("❌ Не удалось отправить заявку. Проверьте интернет и попробуйте ещё раз.");
