@@ -21,7 +21,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed right-4 top-4 z-50 rounded-full border border-slate-600 bg-slate-900/90 px-3 py-1 text-xs text-slate-100 shadow"
+      className="theme-toggle"
       aria-label="Переключить тему"
     >
       {theme === "dark" ? "☀️ Светлая" : "🌙 Тёмная"}
