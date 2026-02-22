@@ -1,3 +1,10 @@
 
 # local assistant tools
 tools/
+
+# nextjs
+.next/
+out/
+node_modules/
+*.log
+next-env.d.ts
