@@ -9,7 +9,7 @@
 - Страница кейсов с примерами и скриншотами из PDF
 - Страница технологий и архитектуры
 - Страница о компании
-- Контактная форма (frontend-версия)
+- Контактная форма с отправкой в Python backend (FastAPI + SQLite)
 - Переключение светлой/тёмной темы
 - Мобильная адаптация (mobile-first)
 
@@ -24,7 +24,11 @@
 ## Структура проекта
 
 ```bash
-site/
+./
+├─ backend/
+│  ├─ app.py
+│  ├─ requirements.txt
+│  └─ leads.db (создается автоматически)
 ├─ public/
 │  └─ cases/                 # скриншоты кейсов из PDF
 ├─ src/
@@ -46,20 +50,24 @@ site/
 ## Локальный запуск
 
 ```bash
-cd site
 npm install
 npm run dev
 ```
 
-Открыть: `http://localhost:3000`
+Frontend: `http://localhost:3000`
 
 ## Production запуск на сервере
 
 ```bash
-cd /root/.openclaw/workspace/site
+cd /root/.openclaw/workspace
 npm install
 npm run build
 pm2 start npm --name ai-site -- start
+
+python3 -m venv /root/.openclaw/venvs/site-backend
+/root/.openclaw/venvs/site-backend/bin/pip install -r backend/requirements.txt
+pm2 start /root/.openclaw/venvs/site-backend/bin/python --name ai-site-backend -- -m uvicorn backend.app:app --host 0.0.0.0 --port 8001 --app-dir /root/.openclaw/workspace
+
 pm2 save
 ```
 
@@ -68,7 +76,9 @@ pm2 save
 ```bash
 pm2 status
 pm2 logs ai-site
+pm2 logs ai-site-backend
 pm2 restart ai-site
+pm2 restart ai-site-backend
 ```
 
 ## Деплой в GitHub
@@ -81,7 +91,7 @@ git push origin main
 
 ## Что важно доделать перед реальным продом
 
-- Подключить backend для контактной формы (email/CRM/Telegram webhook)
+- Настроить доставку заявок из SQLite в CRM/Telegram/email
 - Добавить favicon/бренд-ассеты и финальную типографику
 - Настроить аналитику (например, Plausible / GA4)
 - Добавить legal-страницы: Privacy Policy, Terms
