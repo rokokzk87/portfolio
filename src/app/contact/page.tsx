@@ -29,11 +29,22 @@ export default function ContactPage() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error("request_failed");
+      const raw = await res.text();
 
-      const data = (await res.json()) as { id?: number };
+      if (!res.ok) {
+        throw new Error(raw || "request_failed");
+      }
+
+      let leadId: number | undefined;
+      try {
+        const data = JSON.parse(raw) as { id?: number };
+        leadId = data?.id;
+      } catch {
+        // если ответ не JSON, но статус 2xx — считаем отправку успешной
+      }
+
       setStatus("ok");
-      setMessage(`✅ Заявка отправлена успешно${data?.id ? ` (ID: ${data.id})` : ""}. Мы скоро свяжемся с вами.`);
+      setMessage(`✅ Заявка отправлена успешно${leadId ? ` (ID: ${leadId})` : ""}. Мы скоро свяжемся с вами.`);
       e.currentTarget.reset();
     } catch {
       setStatus("error");
