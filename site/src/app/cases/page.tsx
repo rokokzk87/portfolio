@@ -33,7 +33,7 @@ export default function CasesPage() {
       <div style={{ display: "grid", gap: 12 }}>
         {cases.map((c) => (
           <article key={c.title} className="card" style={{ overflow: "hidden" }}>
-            <div style={{ position: "relative", width: "100%", height: 210 }}>
+            <div className="case-image">
               <Image src={c.image} alt={c.title} fill style={{ objectFit: "cover" }} />
             </div>
             <div style={{ padding: 14 }}>

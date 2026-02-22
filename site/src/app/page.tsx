@@ -16,25 +16,40 @@ const cases = [
   "Автоматический секретарь совещаний",
 ];
 
+const nav = [
+  { href: "/services", label: "Услуги" },
+  { href: "/cases", label: "Кейсы" },
+  { href: "/tech", label: "Технологии" },
+  { href: "/about", label: "О компании" },
+  { href: "/contact", label: "Контакты" },
+];
+
 export default function Home() {
   return (
     <main className="app-shell">
-      <header style={{ borderBottom: "1px solid var(--border)", position: "sticky", top: 0, background: "var(--bg)", zIndex: 20 }}>
-        <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 14, paddingBottom: 14 }}>
+      <header className="topbar">
+        <div className="container topbar-row">
           <b>AI Systems</b>
-          <nav style={{ display: "flex", gap: 12, fontSize: 14 }}>
-            <Link href="/services">Услуги</Link>
-            <Link href="/cases">Кейсы</Link>
-            <Link href="/tech">Технологии</Link>
-            <Link href="/about">О компании</Link>
-            <Link href="/contact">Контакты</Link>
+          <nav className="topbar-nav-desktop">
+            {nav.map((item) => (
+              <Link key={item.href} href={item.href}>
+                {item.label}
+              </Link>
+            ))}
           </nav>
+        </div>
+        <div className="container topbar-nav-mobile">
+          {nav.map((item) => (
+            <Link key={item.href} href={item.href} className="nav-chip">
+              {item.label}
+            </Link>
+          ))}
         </div>
       </header>
 
-      <section className="container" style={{ display: "grid", gap: 18, paddingTop: 44, paddingBottom: 34 }}>
+      <section className="container" style={{ display: "grid", gap: 16, paddingTop: 28, paddingBottom: 24 }}>
         <div className="badge">Интеллектуальные системы автоматизации</div>
-        <h1 style={{ fontSize: 40, lineHeight: 1.1, margin: 0 }}>AI-решения для бизнеса: от Computer Vision до LLM-ассистентов</h1>
+        <h1 className="hero-title">AI-решения для бизнеса: от Computer Vision до LLM-ассистентов</h1>
         <p className="text-muted" style={{ maxWidth: 780 }}>
           Проектируем и внедряем масштабируемые системы в защищенном контуре: аналитика, документооборот, ассистенты,
           автоматизация процессов и управленческие дашборды.
