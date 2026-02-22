@@ -31,20 +31,29 @@ export default function ContactPage() {
 
       if (!res.ok) throw new Error("request_failed");
 
+      const data = (await res.json()) as { id?: number };
       setStatus("ok");
-      setMessage("Заявка отправлена. Мы свяжемся с вами.");
+      setMessage(`✅ Заявка отправлена успешно${data?.id ? ` (ID: ${data.id})` : ""}. Мы скоро свяжемся с вами.`);
       e.currentTarget.reset();
     } catch {
       setStatus("error");
-      setMessage("Не удалось отправить заявку. Попробуйте ещё раз.");
+      setMessage("❌ Не удалось отправить заявку. Проверьте интернет и попробуйте ещё раз.");
     }
   };
+
+  const statusStyle =
+    status === "ok"
+      ? { border: "1px solid #14532d", background: "#052e16", color: "#bbf7d0" }
+      : status === "error"
+        ? { border: "1px solid #7f1d1d", background: "#450a0a", color: "#fecaca" }
+        : { border: "1px solid var(--border)", background: "var(--surface)", color: "var(--muted)" };
 
   return (
     <main className="app-shell container" style={{ paddingTop: 24, paddingBottom: 40 }}>
       <Link href="/" className="text-muted">← На главную</Link>
       <h1>Контакты</h1>
       <p className="text-muted">Оставьте заявку на пилот: оценим задачу и предложим план внедрения.</p>
+
       <form className="card" style={{ padding: 14, display: "grid", gap: 10 }} onSubmit={onSubmit}>
         <input className="input" name="name" placeholder="Имя" required minLength={2} />
         <input className="input" name="company" placeholder="Компания" required minLength={2} />
@@ -54,7 +63,10 @@ export default function ContactPage() {
           {status === "loading" ? "Отправка..." : "Отправить заявку"}
         </button>
       </form>
-      {message ? <p className="text-muted" style={{ marginTop: 10 }}>{message}</p> : null}
+
+      {message ? (
+        <div style={{ marginTop: 12, borderRadius: 10, padding: "10px 12px", fontSize: 14, ...statusStyle }}>{message}</div>
+      ) : null}
     </main>
   );
 }
