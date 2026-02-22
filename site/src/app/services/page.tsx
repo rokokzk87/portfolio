@@ -29,18 +29,18 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-      <Link href="/" className="text-sm text-sky-600">← На главную</Link>
+    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 text-slate-100 sm:px-6 sm:py-12">
+      <Link href="/" className="text-sm text-sky-400">← На главную</Link>
       <h1 className="mt-3 text-3xl font-bold">Услуги</h1>
-      <p className="mt-3 max-w-3xl text-slate-600">
+      <p className="mt-3 max-w-3xl text-slate-300">
         Комплексные AI-решения: от компьютерного зрения и OCR до LLM-систем и архитектуры high-load в защищенном контуре.
       </p>
 
       <section className="mt-8 grid gap-4 sm:grid-cols-2">
         {services.map((s) => (
-          <article key={s.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <article key={s.title} className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 shadow-sm">
             <h2 className="text-lg font-semibold">{s.title}</h2>
-            <p className="mt-2 text-sm text-slate-600">{s.text}</p>
+            <p className="mt-2 text-sm text-slate-300">{s.text}</p>
           </article>
         ))}
       </section>

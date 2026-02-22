@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const cases = [
@@ -6,57 +7,68 @@ const cases = [
     problem: "Невозможность вручную контролировать тысячи камер для выявления нарушений стоянки грузового транспорта.",
     solution: "Внедрили Computer Vision для анализа видеопотока в реальном времени: детекция объектов, трекинг времени простоя, фильтрация ложных срабатываний.",
     result: ["Скорость анализа: до 25 кадров/сек", "Точность: 85%+", "Время уведомления: < 1 минуты"],
+    image: "/cases/case-03.jpg",
   },
   {
     title: "Кейс №2: Цифровой контроль городской среды",
     problem: "Ручной разбор тысяч фотоотчетов занимал до 2.5 дней и зависел от человеческого фактора.",
     solution: "Использовали YOLO для классификации нарушений и OCR для оцифровки документов.",
     result: ["Ускорение в 60 раз", "1 час вместо 2.5 дней", "Снижение нагрузки на персонал"],
+    image: "/cases/case-04.jpg",
   },
   {
     title: "Кейс №3: Корпоративный AI-ассистент (RAG)",
     problem: "Сотрудники тратили много времени на поиск регламентов, инструкций и ответов во внутренней документации.",
     solution: "Запустили LLM-чат-ассистента с подключением к базе знаний и обязательными ссылками на источники.",
     result: ["Работа в защищенном контуре", "Без утечки данных", "Сокращение времени поиска с ~30% до <1%"],
+    image: "/cases/case-05.jpg",
   },
   {
     title: "Кейс №5: AI-протоколирование совещаний",
     problem: "Сложно быстро получать структурированные итоги встреч и договоренности.",
     solution: "Сервис транскрибации + диаризации + AI-саммари из аудио/видео встречи.",
     result: ["Быстрые протоколы", "Структурированный формат", "Повышение прозрачности решений"],
+    image: "/cases/case-06.jpg",
   },
   {
     title: "Кейс №6: Low-Code / No-Code для сложных данных",
     problem: "Неконтролируемые связи, отсутствие актуальной документации, непрозрачность логики и рост нагрузки на аналитиков.",
     solution: "Платформа управления сущностями и связями без SQL, с возможностью самостоятельной работы аналитиков.",
     result: ["Сокращение времени анализа", "Меньше ошибок и инцидентов", "Более быстрое внедрение изменений"],
+    image: "/cases/case-07.jpg",
   },
   {
     title: "Кейс №7: Массовое подключение поставщиков данных",
     problem: "Нужно было быстро подключить много новых поставщиков без бюджета на сложную интеграцию.",
     solution: "Реализован процесс загрузки через Excel + модуль Receiver с автоматической проверкой по схемам.",
     result: ["Быстрый онбординг поставщиков", "Ошибки показываются по строкам", "Соблюдение правил целевой системы"],
+    image: "/cases/case-08.jpg",
   },
 ];
 
 export default function CasesPage() {
   return (
-    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-      <Link href="/" className="text-sm text-sky-600">← На главную</Link>
+    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 text-slate-100 sm:px-6 sm:py-12">
+      <Link href="/" className="text-sm text-sky-400">← На главную</Link>
       <h1 className="mt-3 text-3xl font-bold">Кейсы</h1>
-      <p className="mt-3 max-w-3xl text-slate-600">Практические примеры внедрения решений из презентации.</p>
+      <p className="mt-3 max-w-3xl text-slate-300">Практические примеры внедрения решений из презентации.</p>
 
-      <section className="mt-8 space-y-4">
+      <section className="mt-8 space-y-5">
         {cases.map((c) => (
-          <article key={c.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-lg font-semibold">{c.title}</h2>
-            <p className="mt-2 text-sm"><strong>Проблема:</strong> {c.problem}</p>
-            <p className="mt-2 text-sm"><strong>Решение:</strong> {c.solution}</p>
-            <ul className="mt-3 list-disc pl-5 text-sm text-slate-700">
-              {c.result.map((r) => (
-                <li key={r}>{r}</li>
-              ))}
-            </ul>
+          <article key={c.title} className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-sm">
+            <div className="relative h-52 w-full sm:h-72">
+              <Image src={c.image} alt={c.title} fill className="object-cover" />
+            </div>
+            <div className="p-5">
+              <h2 className="text-lg font-semibold">{c.title}</h2>
+              <p className="mt-2 text-sm text-slate-200"><strong>Проблема:</strong> {c.problem}</p>
+              <p className="mt-2 text-sm text-slate-200"><strong>Решение:</strong> {c.solution}</p>
+              <ul className="mt-3 list-disc pl-5 text-sm text-slate-300">
+                {c.result.map((r) => (
+                  <li key={r}>{r}</li>
+                ))}
+              </ul>
+            </div>
           </article>
         ))}
       </section>
