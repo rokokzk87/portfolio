@@ -5,7 +5,8 @@ import os
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 API_BASE = "https://api.todoist.com/api/v1"
@@ -167,6 +168,72 @@ def cmd_sync(args):
     print("\n".join(lines))
 
 
+def parse_due_datetime(task_due: dict, tz_name: str):
+    if not task_due:
+        return None
+    dt = task_due.get("datetime")
+    if dt:
+        # API returns ISO with Z or offset
+        normalized = dt.replace("Z", "+00:00")
+        try:
+            return datetime.fromisoformat(normalized).astimezone(ZoneInfo(tz_name))
+        except Exception:
+            return None
+    date = task_due.get("date")
+    if date:
+        try:
+            # All-day due date => treat as end of day local time
+            d = datetime.strptime(date, "%Y-%m-%d").date()
+            return datetime(d.year, d.month, d.day, 23, 59, tzinfo=ZoneInfo(tz_name))
+        except Exception:
+            return None
+    return None
+
+
+def cmd_remind(args):
+    token = load_token(Path(args.token_file) if args.token_file else None)
+    tz_name = args.tz or "Europe/Helsinki"
+    now = datetime.now(ZoneInfo(tz_name))
+
+    tasks = unwrap_results(request_json("GET", "/tasks", token))
+    filtered = []
+
+    for t in tasks:
+        due = t.get("due") or {}
+        due_dt = parse_due_datetime(due, tz_name)
+        if not due_dt:
+            continue
+
+        if args.mode == "today":
+            if due_dt.date() == now.date():
+                filtered.append((t, due_dt))
+        elif args.mode == "evening":
+            if due_dt.date() <= now.date():
+                filtered.append((t, due_dt))
+        elif args.mode == "soon":
+            horizon = now + timedelta(hours=args.hours)
+            if now <= due_dt <= horizon:
+                filtered.append((t, due_dt))
+
+    if not filtered:
+        print("NO_ALERT")
+        return
+
+    if args.mode == "today":
+        header = "🔔 Напоминание: задачи на сегодня"
+    elif args.mode == "evening":
+        header = "🌙 Напоминание: дедлайны на сегодня/просроченные"
+    else:
+        header = f"⏰ Напоминание: дедлайн в ближайшие {args.hours} ч"
+
+    lines = [header]
+    for t, due_dt in sorted(filtered, key=lambda x: x[1]):
+        due_str = due_dt.strftime("%d.%m %H:%M")
+        lines.append(f"- {t.get('content','')} (id:{t.get('id')}, срок: {due_str})")
+
+    print("\n".join(lines))
+
+
 def build_parser():
     p = argparse.ArgumentParser(description="Todoist bridge")
     sub = p.add_subparsers(dest="command", required=True)
@@ -196,6 +263,12 @@ def build_parser():
     p_sync.add_argument("--state-file", default=str(DEFAULT_STATE_PATH))
     p_sync.add_argument("--init-only", action="store_true")
     p_sync.set_defaults(func=cmd_sync)
+
+    p_remind = sub.add_parser("remind", parents=[common])
+    p_remind.add_argument("--mode", choices=["today", "evening", "soon"], required=True)
+    p_remind.add_argument("--hours", type=int, default=2)
+    p_remind.add_argument("--tz", default="Europe/Helsinki")
+    p_remind.set_defaults(func=cmd_remind)
 
     return p
 
