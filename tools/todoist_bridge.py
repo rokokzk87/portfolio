@@ -42,6 +42,24 @@ def request_json(method: str, path: str, token: str, payload: dict | None = None
         raise RuntimeError(f"Todoist API error {e.code}: {body}") from e
 
 
+def request_paginated(path: str, token: str):
+    all_results = []
+    cursor = None
+    while True:
+        sep = "&" if "?" in path else "?"
+        p = f"{path}{sep}cursor={cursor}" if cursor else path
+        data = request_json("GET", p, token)
+        if isinstance(data, dict) and "results" in data:
+            all_results.extend(data.get("results") or [])
+            cursor = data.get("next_cursor")
+            if not cursor:
+                break
+        else:
+            # Non-paginated response
+            return data
+    return all_results
+
+
 def unwrap_results(data):
     if isinstance(data, dict) and "results" in data:
         return data.get("results") or []
@@ -104,7 +122,7 @@ def cmd_close(args):
 
 def cmd_list(args):
     token = load_token(Path(args.token_file) if args.token_file else None)
-    tasks = unwrap_results(request_json("GET", "/tasks", token))
+    tasks = unwrap_results(request_paginated("/tasks", token))
     if args.json:
         print(json.dumps(tasks, ensure_ascii=False))
         return
@@ -117,7 +135,7 @@ def cmd_sync(args):
     token = load_token(Path(args.token_file) if args.token_file else None)
     state_path = Path(args.state_file) if args.state_file else DEFAULT_STATE_PATH
 
-    tasks_raw = unwrap_results(request_json("GET", "/tasks", token))
+    tasks_raw = unwrap_results(request_paginated("/tasks", token))
     now = datetime.now(timezone.utc).isoformat()
 
     current_map = {str(t["id"]): normalize_task(t) for t in tasks_raw}
@@ -195,7 +213,7 @@ def cmd_remind(args):
     tz_name = args.tz or "Europe/Helsinki"
     now = datetime.now(ZoneInfo(tz_name))
 
-    tasks = unwrap_results(request_json("GET", "/tasks", token))
+    tasks = unwrap_results(request_paginated("/tasks", token))
     filtered = []
 
     for t in tasks:
