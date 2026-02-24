@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Systems — автоматизация и ИИ для бизнеса",
+  title: "Ганза — автоматизация и ИИ для бизнеса",
   description: "Комплексные AI-решения: Computer Vision, OCR, RAG, low-code платформы и on-premise архитектура.",
 };
 
