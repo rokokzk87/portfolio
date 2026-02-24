@@ -62,7 +62,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="card" style={{ overflow: "hidden" }}>
+          <div className="card hero-video-card">
             <video
               className="showreel-video"
               src="/media/ganza-showreel.mp4"
