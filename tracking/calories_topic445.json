@@ -21,5 +21,29 @@
       "1 чай с сахаром (~25–50)"
     ]
   },
-  "history": []
+  "history": [],
+  "weight": {
+    "unit": "kg",
+    "entries": [
+      {
+        "date": "2026-02-24",
+        "value": 106,
+        "source": "user_profile_start"
+      }
+    ],
+    "startWeight": 106,
+    "goalWeight": 96
+  },
+  "adjustmentPolicy": {
+    "checkPeriodDays": 14,
+    "targetLossKgPerWeek": {
+      "min": 0.3,
+      "max": 0.6
+    },
+    "stepKcal": 150,
+    "minTargetKcal": 1800,
+    "maxTargetKcal": 2600,
+    "lastAdjustmentDate": null,
+    "notes": "If average weekly loss <0.3 kg, reduce target by 150 kcal. If >0.8 kg or high fatigue/hunger reported, increase by 100-150 kcal."
+  }
 }
