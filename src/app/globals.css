@@ -176,6 +176,15 @@ a {
   line-height: 1.12;
 }
 
+.hero-split {
+  display: grid;
+  gap: 14px;
+}
+
+.hero-left {
+  min-width: 0;
+}
+
 h1 {
   font-size: 28px;
   line-height: 1.15;
@@ -195,6 +204,10 @@ h3 {
   max-height: 72vh;
   object-fit: contain;
   background: #000;
+}
+
+.hero-split .showreel-video {
+  max-height: 520px;
 }
 
 .case-image {
@@ -219,6 +232,11 @@ h3 {
 
   .hero-title {
     font-size: 42px;
+  }
+
+  .hero-split {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 42%);
+    align-items: start;
   }
 
   h1 {

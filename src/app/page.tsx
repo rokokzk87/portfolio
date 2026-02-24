@@ -47,33 +47,34 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="container" style={{ display: "grid", gap: 16, paddingTop: 28, paddingBottom: 24 }}>
-        <div className="badge">Интеллектуальные системы автоматизации</div>
-        <h1 className="hero-title">AI-решения для бизнеса: от Computer Vision до LLM-ассистентов</h1>
-        <p className="text-muted" style={{ maxWidth: 780 }}>
-          Проектируем и внедряем масштабируемые системы в защищенном контуре: аналитика, документооборот, ассистенты,
-          автоматизация процессов и управленческие дашборды.
-        </p>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <Link href="/contact" className="btn btn-primary">Обсудить проект</Link>
-          <Link href="/cases" className="btn btn-ghost">Смотреть кейсы</Link>
-        </div>
-      </section>
+      <section className="container" style={{ paddingTop: 28, paddingBottom: 24 }}>
+        <div className="hero-split">
+          <div className="hero-left" style={{ display: "grid", gap: 16 }}>
+            <div className="badge">Интеллектуальные системы автоматизации</div>
+            <h1 className="hero-title">AI-решения для бизнеса: от Computer Vision до LLM-ассистентов</h1>
+            <p className="text-muted" style={{ maxWidth: 780 }}>
+              Проектируем и внедряем масштабируемые системы в защищенном контуре: аналитика, документооборот, ассистенты,
+              автоматизация процессов и управленческие дашборды.
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <Link href="/contact" className="btn btn-primary">Обсудить проект</Link>
+              <Link href="/cases" className="btn btn-ghost">Смотреть кейсы</Link>
+            </div>
+          </div>
 
-      <section className="container" style={{ paddingBottom: 20 }}>
-        <h2 style={{ marginBottom: 12 }}>Видео</h2>
-        <div className="card" style={{ overflow: "hidden" }}>
-          <video
-            className="showreel-video"
-            src="/media/ganza-showreel.mp4"
-            poster="/media/ganza-showreel-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
-            preload="metadata"
-          />
+          <div className="card" style={{ overflow: "hidden" }}>
+            <video
+              className="showreel-video"
+              src="/media/ganza-showreel.mp4"
+              poster="/media/ganza-showreel-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+            />
+          </div>
         </div>
       </section>
 
