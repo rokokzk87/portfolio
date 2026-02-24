@@ -62,7 +62,7 @@ export default function CasesPage() {
         {cases.map((c) => (
           <article key={c.title} className="card" style={{ overflow: "hidden" }}>
             <div className="case-image">
-              <Image src={c.image} alt={c.title} fill style={{ objectFit: "cover" }} />
+              <Image src={c.image} alt={c.title} fill style={{ objectFit: "contain" }} />
             </div>
             <div style={{ padding: 14 }}>
               <h3 style={{ marginTop: 0 }}>{c.title}</h3>
