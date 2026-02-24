@@ -29,7 +29,7 @@ export default function Home() {
     <main className="app-shell">
       <header className="topbar">
         <div className="container topbar-row">
-          <b>Ганза</b>
+          <b>Ганза_AI</b>
           <nav className="topbar-nav-desktop">
             {nav.map((item) => (
               <Link key={item.href} href={item.href}>
