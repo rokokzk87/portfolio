@@ -61,6 +61,23 @@ export default function Home() {
       </section>
 
       <section className="container" style={{ paddingBottom: 20 }}>
+        <h2 style={{ marginBottom: 12 }}>Видео</h2>
+        <div className="card" style={{ overflow: "hidden" }}>
+          <video
+            className="showreel-video"
+            src="/media/ganza-showreel.mp4"
+            poster="/media/ganza-showreel-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            preload="metadata"
+          />
+        </div>
+      </section>
+
+      <section className="container" style={{ paddingBottom: 20 }}>
         <h2 style={{ marginBottom: 12 }}>Услуги</h2>
         <div style={{ display: "grid", gap: 10 }}>
           {services.map((item) => (
