@@ -13,3 +13,5 @@ next-env.d.ts
 backend/__pycache__/
 backend/*.db
 backend/.admin_key
+/root/.openclaw/credentials/notion.token
+.openclaw/credentials/
