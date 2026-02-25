@@ -8,9 +8,11 @@
   "timezone": "Europe/Moscow",
   "currentDate": "2026-02-25",
   "today": {
-    "kcalMin": 0,
-    "kcalMax": 0,
-    "items": []
+    "kcalMin": 280,
+    "kcalMax": 380,
+    "items": [
+      "2 треугольных кусочка (по фото, вероятно блин/лепёшка с сырной/творожной начинкой) (~280–380)"
+    ]
   },
   "history": [
     {
